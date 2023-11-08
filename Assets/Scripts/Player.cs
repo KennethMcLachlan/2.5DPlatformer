@@ -23,15 +23,23 @@ public class Player : MonoBehaviour
     private int _coins;
 
     private UIManager _uiManager;
+
+    [SerializeField]
+    private int _lives = 3;
+
+    [SerializeField]
+    private Transform _startingPosition;
     void Start()
     {
         _controller = GetComponent<CharacterController>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
-        if (_uiManager != null)
+        if (_uiManager == null)
         {
             Debug.Log("UI Manager is null");
         }
+
+        _uiManager.UpdateLivesDisplay(_lives);
     }
 
     void Update()
@@ -72,12 +80,31 @@ public class Player : MonoBehaviour
         velocity.y = _yVelocity;
 
         _controller.Move(velocity * Time.deltaTime);
+
     }
 
     public void AddCoins()
     {
         _coins ++;
         _uiManager.UpdateCoinDisplay(_coins);
-        Debug.Log("Coin has been added");
+    }
+
+    public void OnPLayerDeath()
+    {
+        _lives--;
+        _uiManager.UpdateLivesDisplay(_lives);
+
+        Respawn();
+
+        //If Player Dies
+    }
+
+    private void Respawn()
+    {
+        if (transform.position.y <= -20.0f)
+        {
+            OnPLayerDeath();
+            transform.position = new Vector3(-7.57f, -0.26f, 0f);
+        }
     }
 }

@@ -1,16 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Text _coinText;
+    TextMeshProUGUI _coinText, _livesText;
 
     public void UpdateCoinDisplay(int coins)
     {
-        _coinText.text = "x" + coins.ToString();
+        _coinText.text = "x" + coins.ToString("00");
+    }
+
+    public void UpdateLivesDisplay(int lives)
+    {
+        _livesText.text = "Lives x" + lives.ToString();
+
     }
 }
