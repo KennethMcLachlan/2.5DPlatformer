@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -25,10 +26,12 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
 
     [SerializeField]
-    private int _lives = 3;
+    public int _lives = 3;
 
     [SerializeField]
-    private Transform _startingPosition;
+    private GameObject _respawnPoint;
+
+    
     void Start()
     {
         _controller = GetComponent<CharacterController>();
@@ -93,18 +96,16 @@ public class Player : MonoBehaviour
     {
         _lives--;
         _uiManager.UpdateLivesDisplay(_lives);
-
-        Respawn();
-
-        //If Player Dies
+    
+        //GAME OVER
+        if (_lives < 1)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
-    private void Respawn()
+    public void Respawn()
     {
-        if (transform.position.y <= -20.0f)
-        {
-            OnPLayerDeath();
-            transform.position = new Vector3(-7.57f, -0.26f, 0f);
-        }
+        transform.position = _respawnPoint.transform.position;
     }
 }
