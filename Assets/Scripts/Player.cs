@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,10 +29,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     public int _lives = 3;
 
-    [SerializeField]
-    private GameObject _respawnPoint;
-
-    
     void Start()
     {
         _controller = GetComponent<CharacterController>();
@@ -58,6 +55,8 @@ public class Player : MonoBehaviour
 
         if (_controller.isGrounded == true)
         {
+            _yVelocity = 0;
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _yVelocity = _jumpHeight;
@@ -91,6 +90,10 @@ public class Player : MonoBehaviour
         _coins ++;
         _uiManager.UpdateCoinDisplay(_coins);
     }
+    public int CoinTally()
+    {
+        return _coins;
+    }
 
     public void OnPLayerDeath()
     {
@@ -104,8 +107,4 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Respawn()
-    {
-        transform.position = _respawnPoint.transform.position;
-    }
 }
