@@ -29,5 +29,27 @@ public class Elevator : MonoBehaviour
         }
 
     }
-        
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            if (other != null)
+            {
+            other.transform.parent = gameObject.transform;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            if (other != null)
+            {
+                other.transform.parent = null;
+            }
+        }
+    }
+
 }

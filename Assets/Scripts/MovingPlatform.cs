@@ -43,7 +43,6 @@ public class MovingPlatform : MonoBehaviour
             if (other != null)
             {
                 other.transform.parent = gameObject.transform;
-                Debug.Log("Player parented to platform");
             }
         }
     }
@@ -53,7 +52,6 @@ public class MovingPlatform : MonoBehaviour
         if (other.tag == "Player")
         {
             other.transform.parent = null;
-            Debug.Log("Parent is null");
         }
     }
 }
